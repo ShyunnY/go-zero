@@ -59,7 +59,8 @@ func StartAgent(c Config) {
 
 // StopAgent shuts down the span processors in the order they were registered.
 func StopAgent() {
-	_ = tp.Shutdown(context.Background())
+	err := tp.Shutdown(context.Background())
+	logx.Error(fmt.Errorf("failed to shutdown TracerProvider: %w", err))
 }
 
 func createExporter(c Config) (sdktrace.SpanExporter, error) {
